@@ -31,14 +31,17 @@ let persons = [
   },
 ];
 
+// Home page
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
 
+// Get all persons
 app.get('/api/persons', (request, response) => {
   response.json(persons);
 });
 
+// Display info
 app.get('/info', (request, response) => {
   const info = `<p>Phonebook has info for ${persons.length} people.</p>
   <br/>
@@ -46,6 +49,13 @@ app.get('/info', (request, response) => {
   `;
 
   response.send(info);
+});
+
+// Get person by id
+app.get('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id);
+  const person = persons.find((person) => person.id === id);
+  person ? response.json(person) : response.status(404).end();
 });
 
 const PORT = 3001;

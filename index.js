@@ -78,7 +78,7 @@ app.post('/api/persons', (request, response) => {
 
   if (!body.content) {
     return response.status(400).json({
-      error: 'Content missing',
+      error: 'Name is missing',
     });
   }
 
@@ -87,6 +87,12 @@ app.post('/api/persons', (request, response) => {
     date: new Date(),
     id: generateId(),
   };
+
+  if (persons.include(newPerson.content)) {
+    return response.status(400).json({
+      error: 'Name already exist',
+    });
+  }
 
   persons.concat(newPerson);
   response.json(newPerson);

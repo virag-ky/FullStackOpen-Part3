@@ -1,20 +1,24 @@
 const express = require('express');
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+//const morgan = require('morgan');
+//const fs = require('fs');
+//const path = require('path');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
+app.use(express.static('build'));
 
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, 'access.log'),
-  { flags: 'a' }
-);
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, 'access.log'),
+//   { flags: 'a' }
+// );
 
-app.use(morgan(':method :url :status :json', { stream: accessLogStream }));
-morgan.token('json', function (req, res) {
+//app.use(morgan(':method :url :status :json', { stream: accessLogStream }));
+
+/* morgan.token('json', function (req, res) {
   return JSON.stringify(req.body);
-});
+}); */
 
 let persons = [
   {
@@ -109,7 +113,7 @@ app.post('/api/persons', (request, response) => {
   response.json(newPerson);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

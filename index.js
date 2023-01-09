@@ -35,7 +35,7 @@ let persons = [
 // Generate ID
 const generateId = () => {
   const maxId = persons.length > 0 ? Math.max(...persons.map((n) => n.id)) : 0;
-  return maxId;
+  return maxId + 1;
 };
 
 // Home page
@@ -83,18 +83,17 @@ app.post('/api/persons', (request, response) => {
   }
 
   const newPerson = {
-    content: body.content,
+    name: body.content,
     date: new Date(),
     id: generateId(),
   };
 
-  if (persons.include(newPerson.content)) {
+  if (persons.includes(newPerson.content)) {
     return response.status(400).json({
       error: 'Name already exist',
     });
   }
-
-  persons.concat(newPerson);
+  persons = persons.concat(newPerson);
   response.json(newPerson);
 });
 

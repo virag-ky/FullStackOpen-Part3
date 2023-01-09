@@ -10,7 +10,11 @@ const morgan = require('morgan');
 
 const app = express();
 app.use(express.json());
-app.use(morgan('tiny'));
+
+app.use(morgan(':method :url :status :json'));
+morgan.token('json', function (req, res) {
+  return JSON.stringify(req.body);
+});
 
 let persons = [
   {
@@ -79,14 +83,19 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body;
 
-  if (!body.content) {
+  if (!body.name) {
     return response.status(400).json({
       error: 'Name is missing',
+    });
+  } else if (!body.number) {
+    return response.status(400).json({
+      error: 'Number is missing',
     });
   }
 
   const newPerson = {
-    name: body.content,
+    name: body.name,
+    number: body.number,
     date: new Date(),
     id: generateId(),
   };

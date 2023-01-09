@@ -1,17 +1,17 @@
-// const http = require('http');
-
-// const app = http.createServer((request, response) => {
-//   response.writeHead(200, { 'Content-Type': 'application/json });
-//   response.end(JSON.stringify(persons));
-// });
-
 const express = require('express');
 const morgan = require('morgan');
+const fs = require('fs');
+const path = require('path');
 
 const app = express();
 app.use(express.json());
 
-app.use(morgan(':method :url :status :json'));
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, 'access.log'),
+  { flags: 'a' }
+);
+
+app.use(morgan(':method :url :status :json', { stream: accessLogStream }));
 morgan.token('json', function (req, res) {
   return JSON.stringify(req.body);
 });

@@ -6,3 +6,8 @@
 
 > The course also covers application testing, configuration and management of execution environments, as well as the use of the MongoDB database to store the application's data.
 
+### Technologies used:
+* [Node.js](https://nodejs.org/en/)
+* [Express](http://expressjs.com/)
+* [Nodemon](https://nodemon.io/)
+* [Morgan middleware](https://github.com/expressjs/morgan)

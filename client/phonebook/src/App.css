@@ -1,0 +1,83 @@
+#app-container {
+  padding: 40px 20px 0 20px;
+}
+
+h2 {
+  margin: 15px 0;
+}
+
+form {
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 320px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+#search {
+  width: 280px;
+}
+
+#submit-container {
+  width: 80px;
+  align-self: flex-end;
+}
+
+#submit {
+  padding: 8px 5px;
+  background: rgb(0, 162, 255);
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  width: 80px;
+}
+
+.delete {
+  background: red;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#content {
+  width: 420px;
+}
+
+.person-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  background: rgb(233, 232, 232);
+  padding: 5px;
+}
+
+#success {
+  border: solid green;
+  color: green;
+  font-weight: 700;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#success-container {
+  height: 50px;
+  width: 100%;
+}

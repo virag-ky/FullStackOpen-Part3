@@ -50,9 +50,9 @@ const generateId = () => {
 };
 
 // Home page
-app.get('/', (request, response) => {
-  response.send('<h1>Hello World!</h1>');
-});
+// app.get('/', (request, response) => {
+//   response.send('<h1>Hello World!</h1>');
+// });
 
 // Get all persons
 app.get('/api/persons', (request, response) => {

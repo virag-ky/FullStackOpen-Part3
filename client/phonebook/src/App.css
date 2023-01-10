@@ -7,9 +7,16 @@ h2 {
 }
 
 form {
-  width: 420px;
+  width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+#search-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
 }
 
 .input-container {
@@ -20,13 +27,9 @@ form {
 }
 
 input {
-  width: 320px;
+  width: 75%;
   padding: 5px;
   font-size: 16px;
-}
-
-#search {
-  width: 280px;
 }
 
 #submit-container {
@@ -53,10 +56,6 @@ input {
   color: #fff;
   font-weight: 700;
   cursor: pointer;
-}
-
-#content {
-  width: 420px;
 }
 
 .person-info {

@@ -9,8 +9,8 @@ const Form = ({
 }) => {
   return (
     <div>
-      <div>
-        Filter shown with{' '}
+      <div id="search-container">
+        Filter:{' '}
         <input
           id="search"
           type="search"
@@ -21,10 +21,11 @@ const Form = ({
       <h2>Add new</h2>
       <form onSubmit={addNewName}>
         <div className="input-container">
-          Name: <input value={newName} onChange={onChange} />
+          Name: <input value={newName} onChange={onChange} maxLength="15" />
         </div>
         <div className="input-container">
-          Number: <input value={newNumber} onChange={onChangeNumber} />
+          Number:{' '}
+          <input value={newNumber} onChange={onChangeNumber} maxLength="13" />
         </div>
         <div id="submit-container">
           <button id="submit" type="submit">

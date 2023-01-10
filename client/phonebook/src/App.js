@@ -19,7 +19,7 @@ const App = () => {
       .getAll()
       .then((personsList) => setPersons(personsList))
       .catch((error) => console.log('Something went wrong!', error));
-  }, [persons]);
+  }, []);
 
   useEffect(() => {
     filterPeople();
@@ -28,12 +28,12 @@ const App = () => {
   const addNewName = (event) => {
     event.preventDefault();
 
-    if (newName === '' && newNumber === '') {
+    if (newName.trim() === '' && newNumber.trim() === '') {
       return;
     }
 
     const exist = persons.some((person) => {
-      if (person.name === newName) {
+      if (person.name.trim() === newName.trim()) {
         if (
           window.confirm(
             `${person.name} is already added to phonebook, replace the old number with a new one?`

@@ -3,3 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  width: 40%;
+}
+
+@media (max-width: 900px) {
+  body {
+    width: 100%;
+  }
+}

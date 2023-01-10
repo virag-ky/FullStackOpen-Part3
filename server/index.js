@@ -1,7 +1,5 @@
 const express = require('express');
-const morgan = require('morgan');
-const fs = require('fs');
-const path = require('path');
+//const morgan = require('morgan');
 const cors = require('cors');
 
 const app = express();
@@ -9,16 +7,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('build'));
 
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, 'access.log'),
-  { flags: 'a' }
-);
+// app.use(morgan(':method :url :status :json'));
 
-app.use(morgan(':method :url :status :json', { stream: accessLogStream }));
-
-morgan.token('json', function (req, res) {
-  return JSON.stringify(req.body);
-});
+// morgan.token('json', function (req, res) {
+//   return JSON.stringify(req.body);
+// });
 
 let persons = [
   {
@@ -49,11 +42,6 @@ const generateId = () => {
   return maxId + 1;
 };
 
-// Home page
-// app.get('/', (request, response) => {
-//   response.send('<h1>Hello World!</h1>');
-// });
-
 // Get all persons
 app.get('/api/persons', (request, response) => {
   response.json(persons);
@@ -75,6 +63,17 @@ app.get('/api/persons/:id', (request, response) => {
   const person = persons.find((person) => person.id === id);
   person ? response.json(person) : response.status(404).end();
 });
+
+// app.put('/api/persons/:id', (request, response) => {
+//   const id = Number(request.params.id);
+//   const person = persons.find((person) => person.id === id);
+//   const newPerson = {
+//     ...person,
+//     number: request.body.number,
+//   };
+//   persons[id - 1] = newPerson;
+//   response.json(newPerson);
+// });
 
 // Delete person
 app.delete('/api/persons/:id', (request, response) => {

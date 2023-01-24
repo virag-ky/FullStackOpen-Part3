@@ -1,12 +1,21 @@
 require('dotenv').config();
 const express = require('express');
+const app = express();
 const cors = require('cors');
 const Person = require('./models/person');
 
-const app = express();
+const requestLogger = (request, response, next) => {
+  console.log('Method:', request.method);
+  console.log('Path:  ', request.path);
+  console.log('Body:  ', request.body);
+  console.log('---');
+  next();
+};
+
 app.use(express.static('build'));
 app.use(cors());
 app.use(express.json());
+app.use(requestLogger);
 
 // Get all persons
 app.get('/api/persons', (request, response) => {
@@ -26,11 +35,14 @@ app.get('/api/persons/:id', (request, response, next) => {
 });
 
 // // Delete person
-// app.delete('/api/persons/:id', (request, response) => {
-//   const id = Number(request.params.id);
-//   persons = persons.filter((person) => person.id !== id);
-//   response.status(204).end();
-// });
+app.delete('/api/persons/:id', (request, response, next) => {
+  const id = request.params.id;
+  Person.findByIdAndRemove(id)
+    .then((result) => {
+      response.status(204).end();
+    })
+    .catch((error) => next(error));
+});
 
 // Create person
 app.post('/api/persons', (request, response) => {
@@ -39,13 +51,35 @@ app.post('/api/persons', (request, response) => {
   const newPerson = new Person({
     name: body.name,
     number: body.number,
-    date: new Date(),
   });
 
   newPerson.save().then((savedPerson) => {
     response.json(savedPerson);
   });
 });
+
+// Update person
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body;
+  const id = request.params.id;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(id, person, { new: true })
+    .then((updatedPerson) => {
+      response.json(updatedPerson);
+    })
+    .catch((error) => next(error));
+});
+
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'Unknown endpoint' });
+};
+
+app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
   console.log(error.message);

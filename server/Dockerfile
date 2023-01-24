@@ -34,4 +34,4 @@ ENV NODE_ENV production
 ENV PATH /root/.volta/bin:$PATH
 
 CMD [ "npm", "run", "start" ]
-EXPOSE port
+EXPOSE 3001

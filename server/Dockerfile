@@ -34,4 +34,3 @@ ENV NODE_ENV production
 ENV PATH /root/.volta/bin:$PATH
 
 CMD [ "npm", "run", "start" ]
-EXPOSE 3001

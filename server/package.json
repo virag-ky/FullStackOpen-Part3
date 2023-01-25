@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../client/phonebook && npm run build && cp -r build ../../server",
     "deploy": "fly deploy",
-    "deploy:full": "npm run build:ui && npm run deploy",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "logs:prod": "fly logs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -4,6 +4,7 @@ import Form from './components/Form';
 import Content from './components/Content';
 import personService from './services/persons';
 import Notification from './components/Notification';
+import Error from './components/Error';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,7 +14,7 @@ const App = () => {
   const [loaded, setLoaded] = useState(true);
   const [filtered, setFiltered] = useState([]);
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     personService
@@ -22,11 +23,7 @@ const App = () => {
       .catch((error) => {
         console.log('Something went wrong!', error);
       });
-  }, []);
-
-  useEffect(() => {
-    setError(true);
-  }, [message]);
+  }, [persons]);
 
   useEffect(() => {
     filterPeople();
@@ -50,11 +47,23 @@ const App = () => {
             ...person,
             number: newNumber,
           };
-          personService.update(person.id, updatedPerson);
-          setMessage(`Phone number is updated for ${person.name}`);
-          setNewName('');
-          setNewNumber('');
-          removeMessage();
+          personService
+            .update(person.id, updatedPerson)
+            .then(() => {
+              setMessage(`Phone number is updated for ${person.name}`);
+              setPersons(persons);
+              setNewName('');
+              setNewNumber('');
+              removeMessage();
+            })
+            .catch((error) => {
+              console.log(
+                "Updating the person's number failed!",
+                error.response.data.error
+              );
+              setError(error.response.data.error);
+              removeError();
+            });
         }
         return true;
       }
@@ -78,7 +87,8 @@ const App = () => {
         })
         .catch((error) => {
           console.log('Adding a new person failed!', error.response.data.error);
-          setMessage('Hi');
+          setError(error.response.data.error);
+          removeError();
         });
     }
   };
@@ -113,13 +123,19 @@ const App = () => {
     setTimeout(() => {
       setMessage('');
     }, 5000);
-    setError(false);
+  };
+
+  const removeError = () => {
+    setTimeout(() => {
+      setError('');
+    }, 10000);
   };
 
   return (
     <div id="app-container">
       <h2>Phonebook</h2>
-      {error ? <Notification message={message} /> : ''}
+      <Notification message={message} />
+      <Error error={error} />
       <Form
         addNewName={addNewName}
         onChange={(event) => setNewName(event.target.value)}

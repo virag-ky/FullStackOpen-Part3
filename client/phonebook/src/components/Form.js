@@ -24,7 +24,12 @@ const Form = ({
           Name: <input value={newName} onChange={onChange} />
         </div>
         <div className="input-container">
-          Number: <input value={newNumber} onChange={onChangeNumber} />
+          Number:{' '}
+          <input
+            value={newNumber}
+            onChange={onChangeNumber}
+            placeholder="example formats: 02-345679 or 123-45678"
+          />
         </div>
         <div id="submit-container">
           <button id="submit" type="submit">

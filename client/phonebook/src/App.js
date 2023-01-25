@@ -13,13 +13,20 @@ const App = () => {
   const [loaded, setLoaded] = useState(true);
   const [filtered, setFiltered] = useState([]);
   const [message, setMessage] = useState('');
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     personService
       .getAll()
       .then((personsList) => setPersons(personsList))
-      .catch((error) => console.log('Something went wrong!', error));
+      .catch((error) => {
+        console.log('Something went wrong!', error);
+      });
   }, []);
+
+  useEffect(() => {
+    setError(true);
+  }, [message]);
 
   useEffect(() => {
     filterPeople();
@@ -69,7 +76,10 @@ const App = () => {
           setNewNumber('');
           removeMessage();
         })
-        .catch((error) => console.log('Adding a new person failed!', error));
+        .catch((error) => {
+          console.log('Adding a new person failed!', error.response.data.error);
+          setMessage('Hi');
+        });
     }
   };
 
@@ -103,12 +113,13 @@ const App = () => {
     setTimeout(() => {
       setMessage('');
     }, 5000);
+    setError(false);
   };
 
   return (
     <div id="app-container">
       <h2>Phonebook</h2>
-      <Notification message={message} />
+      {error ? <Notification message={message} /> : ''}
       <Form
         addNewName={addNewName}
         onChange={(event) => setNewName(event.target.value)}

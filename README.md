@@ -10,10 +10,12 @@
 * React
 * Node.js
 * Express
+* Mongoose
+* MongoDB
 
 ### Deployment:
 
-* [Fly.io](https://fly.io/) => [https://bold-glitter-9835.fly.dev/](https://bold-glitter-9835.fly.dev/)
+* [Render](https://render.com/) => https://phonebook-68se.onrender.com/
 
 ### Screenshot:
 

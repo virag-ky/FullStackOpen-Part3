@@ -10,6 +10,7 @@
     "deploy": "fly deploy",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "logs:prod": "fly logs",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -31,6 +32,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.32.0",
     "nodemon": "^2.0.20"
   }
 }
